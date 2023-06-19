@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BookEditModel
+@{
+    ViewData["Title"] = "Book Create";
+    ViewData["PageTitle"] = "Book Create";
+}
+
+<div class="continer-fluid">
+    <partial name="_ResponsePartial" />
+    <h4 class="font-weight-bold text-center">Update Book</h4>
+    <form class="w-75 mx-auto" asp-antiforgery="true" method="post" asp-area="Admin" asp-controller="Book" asp-action="Edit">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label for="bookName" asp-for=Name class="form-label"></label>
+            <input type="text" asp-for=Name class="form-control" id="bookName" placeholder="Enter Book Name">
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Author" for="authorName" class="form-label"></label>
+            <input type="text" asp-for=Author class="form-control" id="authorName" placeholder="Enter Author Name">
+            <span class="text-danger" asp-validation-for="Author"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Genre" for="genre" class="form-label"></label>
+            <input type="text" asp-for=Genre class="form-control" id="genre" placeholder="Enter Genre">
+            <span class="text-danger" asp-validation-for="Genre"></span>
+        </div>
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary px-2 w-100 ">Update</button>
+        </div>
+    </form>
+</div>

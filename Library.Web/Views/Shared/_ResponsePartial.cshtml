@@ -1,0 +1,12 @@
+﻿@{
+}
+@using Library.Web.Utilities;
+
+@if (null != TempData.Peek<ResponseModel>("Response"))
+{
+    var response = TempData.Get<ResponseModel>("Response");
+    <div class="my-1 alert alert-@response.ResponseType.ToString().ToLower() alert-dismissible fade show" role="alert">
+        @response.Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
