@@ -103,25 +103,25 @@ namespace Library.Web.Controllers
             return View(viewName:"Index");
         }
         [HttpGet]
-        public async Task<IActionResult> OnLogin(LoginModel model)
+        public async Task<IActionResult> Login()
         {
-            
-            if (!string.IsNullOrEmpty(model.ErrorMessage))
-            {
-                ModelState.AddModelError(string.Empty, model.ErrorMessage);
-            }
 
-             var returnUrl = model.ReturnUrl?? Url.Content("~/");
+            //if (!string.IsNullOrEmpty(model.ErrorMessage))
+            //{
+            //    ModelState.AddModelError(string.Empty, model.ErrorMessage);
+            //}
+
+            // var returnUrl = model.ReturnUrl?? Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            model.ReturnUrl = returnUrl;
-            return View(model);
+            //model.ReturnUrl = returnUrl;
+            return View();
         }
-        public async Task<IActionResult> OnPostLogin(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
            var returnUrl= model.ReturnUrl?? Url.Content("~/");
 
@@ -135,6 +135,11 @@ namespace Library.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    TempData.Put<ResponseModel>("Response", new ResponseModel
+                    {
+                        Message = "Login Success!",
+                        ResponseType = ResponseType.Success
+                    });
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -144,15 +149,25 @@ namespace Library.Web.Controllers
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
+                    TempData.Put<ResponseModel>("Response", new ResponseModel
+                    {
+                        Message = "Login Failed. User account locked out",
+                        ResponseType = ResponseType.Danger
+                    });
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-
+                    TempData.Put<ResponseModel>("Response", new ResponseModel
+                    {
+                        Message = "Login Failed",
+                        ResponseType = ResponseType.Danger
+                    });
+                    return View();
                 }
             }
-            return View(nameof(Index));
+            return View();
         }
     }
 }
