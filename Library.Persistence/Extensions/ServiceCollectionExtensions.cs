@@ -57,5 +57,9 @@ namespace Library.Persistence.Extensions
 
             services.AddRazorPages();
         }
+        public static void AddGoogleAuth(this IServiceCollection services)
+        {
+            services.AddGoogleAuth();
+        }
     }
 }
