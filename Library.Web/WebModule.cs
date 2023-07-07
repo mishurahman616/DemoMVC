@@ -18,6 +18,10 @@ namespace Library.Web
             builder.RegisterType<RegisterModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<LoginModel>().AsSelf().InstancePerLifetimeScope();
 
+            //Role Model
+            builder.RegisterType<RoleCreateModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RoleListModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RoleAssignModel>().AsSelf().InstancePerLifetimeScope();
             
             base.Load(builder);
         }

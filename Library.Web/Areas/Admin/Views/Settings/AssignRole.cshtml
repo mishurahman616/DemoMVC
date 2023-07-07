@@ -1,0 +1,29 @@
+﻿@model RoleAssignModel
+@{
+    ViewData["Title"] = "Role Assign";
+    ViewData["PageTitle"] = "Role Assign";
+}
+
+<div class="continer-fluid">
+    <partial name="_ResponsePartial" />
+    <h4 class="font-weight-bold text-center">Assign Role</h4>
+    <form class="w-75 mx-auto" asp-antiforgery="true" method="post" asp-area="Admin" asp-controller="Settings" asp-action="AssignRole">
+        <div class="mb-3">
+            <label asp-for=UserName class="form-label"></label>
+            <select asp-items=@Model.Users asp-for=UserName class="form-control"></select>
+            <span class="text-danger" asp-validation-for="UserName"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for=RoleName class="form-label"></label>
+            <select asp-items=@Model.Roles asp-for="RoleName" class="form-control"></select>
+            <span class="text-danger" asp-validation-for="RoleName"></span>
+        </div>
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary px-2 w-100 ">Submit</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

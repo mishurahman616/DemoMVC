@@ -1,0 +1,57 @@
+﻿@model RoleListModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Role List";
+    ViewData["PageTitle"] = "Role List";
+}
+@section Styles{
+        <link rel="stylesheet" href="~/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"/>
+}
+<div class="container">
+    <partial name="_ResponsePartial" />
+    <a href="/Admin/Settings/CreateRole" class="my-2 p-2 bg-blue text-white">Create</a>
+    <h4 class="text-center font-weight-bold"> Role List</h4>
+    <table id="roleList" class="table table-striped mt-3">
+        <thead>
+            <th>Role Name</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <partial name="_ModalPartial" />
+</div>
+@section Scripts{
+        <script src="~/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="~/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+                $(function(){
+                    $("#roleList").DataTable({
+                        "ajax": "/Admin/Settings/GetRoles",
+                      columns:[
+                          {data:'name'},
+                          {data:'id',
+                           render:function(data, type, row){
+                                   return `<a href="/Admin/Settings/EditRole/${data}" class="btn btn-primary">Edit</a>
+                                    <a type data-bs-toggle="modal" data-bs-target="#deleteModal" class = "show-delete-modal btn btn-danger"  data-id="${data}">Delete</a>`;
+
+                            }
+                          }
+                      ]
+
+                    });
+
+                    $("#bookList").on("click", ".show-delete-modal", function(event){
+                        var id = $(this).data("id");
+                        $("#deleteId").val(id);
+                        $("#deleteForm").attr("action", "/Admin/Settings/DeleteRole");
+                    });
+                    $("#deleteConfirmButton").click(function(){
+                    $("#deleteForm").submit();
+                });
+                });
+        </script>
+}

@@ -3,11 +3,12 @@ using Library.Infrastructure.Utilities;
 using Library.Web.Areas.Admin.Models;
 using Library.Web.Models;
 using Library.Web.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize(Roles = "Librarian")]
     public class BookController : Controller
     {
         private readonly ILifetimeScope _scope;
