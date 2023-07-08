@@ -44,7 +44,7 @@
 
                     });
 
-                    $("#bookList").on("click", ".show-delete-modal", function(event){
+                    $("#roleList").on("click", ".show-delete-modal", function(event){
                         var id = $(this).data("id");
                         $("#deleteId").val(id);
                         $("#deleteForm").attr("action", "/Admin/Settings/DeleteRole");

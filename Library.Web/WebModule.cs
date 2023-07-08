@@ -22,6 +22,7 @@ namespace Library.Web
             builder.RegisterType<RoleCreateModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RoleListModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RoleAssignModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RoleEditModel>().AsSelf().InstancePerLifetimeScope();
             
             base.Load(builder);
         }

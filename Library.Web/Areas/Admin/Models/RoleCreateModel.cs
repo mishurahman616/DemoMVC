@@ -16,7 +16,6 @@ namespace Library.Web.Areas.Admin.Models
         public string Name { get; set; }
 
         protected RoleManager<ApplicationRole> _roleManager;
-        protected UserManager<ApplicationUser> _userManager;
         public RoleCreateModel()
         {
 
@@ -25,7 +24,6 @@ namespace Library.Web.Areas.Admin.Models
         public void ResolveDependency(ILifetimeScope scope)
         {
             _roleManager = scope.Resolve<RoleManager<ApplicationRole>>();
-            _userManager = scope.Resolve<UserManager<ApplicationUser>>();
         }
         internal async Task CreateRole()
         {

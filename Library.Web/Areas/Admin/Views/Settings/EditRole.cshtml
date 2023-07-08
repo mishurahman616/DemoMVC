@@ -1,0 +1,25 @@
+﻿@model RoleEditModel
+@{
+    ViewData["Title"] = "Role Edit";
+    ViewData["PageTitle"] = "Role Edit";
+}
+
+<div class="continer-fluid">
+    <partial name="_ResponsePartial" />
+    <h4 class="font-weight-bold text-center">Edit Role</h4>
+    <form class="w-75 mx-auto" asp-antiforgery="true" method="post" asp-area="Admin" asp-controller="Settings" asp-action="EditRole">
+        <div class="mb-3">
+            <input type="hidden" asp-for="RoleId" />
+            <label for="Name" asp-for=RoleName class="form-label"></label>
+            <input type="text" asp-for=RoleName class="form-control" id="roleName" placeholder="Enter Role Name">
+            <span class="text-danger" asp-validation-for="RoleName"></span>
+        </div>
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary px-2 w-100 ">Update</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

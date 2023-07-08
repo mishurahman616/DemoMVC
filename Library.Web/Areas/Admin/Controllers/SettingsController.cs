@@ -36,7 +36,34 @@ namespace Library.Web.Areas.Admin.Controllers
                 role.ResolveDependency(_scope);
                 await role.CreateRole();
             }
-            return View();
+            return RedirectToAction(nameof(Roles));
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditRole(Guid id)
+        {
+            var role = _scope.Resolve<RoleEditModel>();
+            await role.LoadData(id);
+            return View(role);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRole(RoleEditModel role)
+        {
+            if (ModelState.IsValid)
+            {
+                role.ResolveDependency(_scope);
+                await role.UpdateRole();
+            }
+            return RedirectToAction(nameof(Roles));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRole(Guid id)
+        {
+            var role = _scope.Resolve<RoleEditModel>();
+            await role.DeleteRole(id);
+            return RedirectToAction(nameof(Roles));
         }
         [HttpGet]
         public JsonResult GetRoles()
