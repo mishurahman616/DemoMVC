@@ -2,8 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="w-50 px-5 mx-auto">
     <partial name ="_ResponsePartial" />
-    <h1 class="display-4">Welcome</h1>
-    
+    <div class="text-start">
+    <b>You have role:</b>
+    @{
+
+        if (User.Identity?.IsAuthenticated??false)
+        {
+            <b>Claims:</b>
+            if (ViewBag.Roles != null)
+            {
+                <ul type="disc">
+                    @foreach(var role in ViewBag.Roles)
+                    {
+                        <li>@role</li>
+                    }
+                </ul>
+            }
+        }
+        <b>User List</b>
+        @foreach (var user in ViewBag.Users)
+        {
+            <li>@user</li>
+        }
+    }
+    </div>
 </div>

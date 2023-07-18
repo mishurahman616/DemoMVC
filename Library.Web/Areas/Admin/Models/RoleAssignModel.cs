@@ -22,7 +22,7 @@ namespace Library.Web.Areas.Admin.Models
         public string UserName { get; set; }
         public List<SelectListItem> Users { get; set; }
         public List<SelectListItem> Roles { get; set; }
-
+        
         protected RoleManager<ApplicationRole> _roleManager;
         protected UserManager<ApplicationUser> _userManager;
         public RoleAssignModel()

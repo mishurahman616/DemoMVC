@@ -44,10 +44,14 @@ namespace Library.Web.Areas.Admin.Models
             {
                 throw new Exception("Invalid Role");
             }
-            ApplicationRole role = new ApplicationRole();
-            role.Id= RoleId;
-            role.Name= RoleName;
-            await _roleManager.UpdateAsync(role);
+
+            var role = await _roleManager.FindByIdAsync(RoleId.ToString());
+            if(role!= null)
+            { 
+                role.Name = RoleName;
+              await _roleManager.UpdateAsync(role);
+            }
+
         }
         public async Task DeleteRole(Guid id)
         {

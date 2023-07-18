@@ -7,7 +7,7 @@ using NuGet.Protocol;
 
 namespace Library.Web.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize(Roles ="Admin")]
+    [Area("Admin"), Authorize(Roles ="Admin1")]
     public class SettingsController : Controller
     {
         private readonly ILifetimeScope _scope;

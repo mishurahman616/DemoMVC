@@ -143,6 +143,7 @@ namespace Library.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Authorize(Policy = "HRLibraianPolicy")]
         public async Task<JsonResult> GetBooks()
         {
             var model = _scope.Resolve<BookListModel>();

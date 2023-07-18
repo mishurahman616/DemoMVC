@@ -32,6 +32,7 @@ namespace Library.Persistence.Extensions
                     options.Cookie.Name = "LibraryPortal.Identity";
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                    
                 });
 
             services.Configure<IdentityOptions>(options =>
@@ -53,6 +54,16 @@ namespace Library.Persistence.Extensions
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("HRLibraianPolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("HR");
+                    policy.RequireRole("Librarian");
+                });
             });
 
             services.AddRazorPages();
