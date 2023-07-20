@@ -5,7 +5,7 @@
 <div class="w-50 px-5 mx-auto">
     <partial name ="_ResponsePartial" />
     <div class="text-start">
-    <b>You have role:</b>
+        <p><b>You have role:</b></p>
     @{
 
         if (User.Identity?.IsAuthenticated??false)
@@ -21,11 +21,14 @@
                 </ul>
             }
         }
-        <b>User List</b>
+            <p>
+        <b>User List</b></p>
+        <ul>
         @foreach (var user in ViewBag.Users)
         {
             <li>@user</li>
         }
+        </ul>
     }
     </div>
 </div>

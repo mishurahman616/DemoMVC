@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Web.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize(Roles = "Librarian")]
+    [Area("Admin")]
     public class BookController : Controller
     {
         private readonly ILifetimeScope _scope;
@@ -19,18 +19,20 @@ namespace Library.Web.Areas.Admin.Controllers
             _logger = logger;
         }
 
-
+        [Authorize(Policy = "ViewBookPolicy")]
         public IActionResult Index()
         {
             return View();
         }
         //Http Get
+        [Authorize(Policy = "BookCreateRequirementPolicy")]
         public IActionResult Create()
         {
             return View();
         }
         //Http Post
         [HttpPost, ValidateAntiForgeryToken]
+        [Authorize(Policy = "BookCreateRequirementPolicy")]
         public IActionResult Create(BookCreateModel model)
         {
             if (ModelState.IsValid)
@@ -143,7 +145,7 @@ namespace Library.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize(Policy = "HRLibraianPolicy")]
+
         public async Task<JsonResult> GetBooks()
         {
             var model = _scope.Resolve<BookListModel>();

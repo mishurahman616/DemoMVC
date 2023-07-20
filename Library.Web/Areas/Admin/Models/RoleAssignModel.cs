@@ -54,5 +54,25 @@ namespace Library.Web.Areas.Admin.Models
             await _userManager.AddToRoleAsync(User!, RoleName);
 
         }
+        internal async Task AssignStaticClaim()
+        {
+            try
+            {
+                ApplicationUser? user = await _userManager.FindByNameAsync("rahman@gmail.com");
+                if (user != null)
+                {
+                    await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("ViewCreateClaim", "True"));
+                }
+                else
+                {
+                    Console.WriteLine("User not found");
+                }
+                
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
     }
 }

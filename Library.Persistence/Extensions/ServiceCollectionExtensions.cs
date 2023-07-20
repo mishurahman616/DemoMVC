@@ -1,5 +1,7 @@
-﻿using Library.Persistence.Features.Memberships;
+﻿using Library.Infrastructure.Securities.Authorization;
+using Library.Persistence.Features.Memberships;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,8 +66,15 @@ namespace Library.Persistence.Extensions
                     policy.RequireRole("HR");
                     policy.RequireRole("Librarian");
                 });
+                options.AddPolicy("ViewBookPolicy", policy => {
+                    policy.RequireClaim("ViewBookClaim", "True");
+                });
+                options.AddPolicy("BookCreateRequirementPolicy", policy =>
+                {
+                    policy.Requirements.Add(new BookCreateRequirement());
+                });
             });
-
+            services.AddSingleton<IAuthorizationHandler, BookCreateRequirementHandler>();
             services.AddRazorPages();
         }
         public static void AddGoogleAuth(this IServiceCollection services)

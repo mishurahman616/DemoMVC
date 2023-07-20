@@ -88,5 +88,12 @@ namespace Library.Web.Areas.Admin.Controllers
             await model.AssignRole();
             return RedirectToAction(nameof(Roles));
         }
+
+        public async Task<IActionResult> AssignClaim()
+        {
+            var model = _scope.Resolve<RoleAssignModel>();
+            await model.AssignStaticClaim();
+            return View(model);
+        }
     }
 }
