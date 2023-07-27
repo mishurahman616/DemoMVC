@@ -1,6 +1,10 @@
 ﻿using Autofac;
+using Library.API.Models;
+using Library.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Library.API.Controllers
 {
@@ -11,78 +15,67 @@ namespace Library.API.Controllers
         private ILifetimeScope _scope;
         private readonly ILogger<BookController> _logger;
 
-        // GET: BookController
-        public ActionResult Index()
+        public BookController(ILifetimeScope scope, ILogger<BookController> logger)
         {
-            return View();
+            _scope = scope;
+            _logger = logger;
         }
 
-        // GET: BookController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("id")]
+        //[Authorize(Policy = "BookCreateRequirementPolicy")]
+        public Book GetBook(Guid id)
         {
-            return View();
+            BookModel model = _scope.Resolve<BookModel>();
+            return model.GetBookById(id);
+
         }
 
-        // GET: BookController/Create
-        public ActionResult Create()
+        [HttpGet]
+        public IEnumerable<Book> GetBooks()
         {
-            return View();
+            BookModel model = _scope.Resolve<BookModel>();
+            return model.GetAllBooks();
         }
 
-        // POST: BookController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult CreateBook([FromBody] BookModel bookModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                bookModel.ResolveDependency(_scope);
+                bookModel.CreateBook();
+                return Ok("Book Created Successfully!");
+            }catch(Exception ex)
             {
-                return View();
+                return BadRequest(ex.Message);
             }
+       
         }
 
-        // GET: BookController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BookController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpPut]
+        public IActionResult UpdateBook(BookModel bookModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                bookModel.ResolveDependency(_scope);
+                bookModel.UpdateBook();
+                return Ok(bookModel);
+            }catch (Exception ex)
             {
-                return View();
+                return BadRequest(ex.Message);
             }
-        }
 
-        // GET: BookController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
-
-        // POST: BookController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpDelete]
+        public IActionResult DeleteBook(Guid id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                BookModel model = _scope.Resolve<BookModel>();
+                model.DeleteBook(id);
+                return Ok(model);
+            }catch (Exception ex){
+                return BadRequest(ex.Message);
             }
         }
     }
