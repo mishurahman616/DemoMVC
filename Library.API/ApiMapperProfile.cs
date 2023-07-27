@@ -8,8 +8,7 @@ namespace Library.API
     {
         public ApiMapperProfile() 
         {
-            CreateMap<BookModel, Book>()
-    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => Guid.NewGuid()));
+            CreateMap<BookModel, Book>().ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.Id==Guid.Empty?Guid.NewGuid():src.Id));
 
         }
     }

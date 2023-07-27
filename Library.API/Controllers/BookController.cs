@@ -53,13 +53,13 @@ namespace Library.API.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateBook(BookModel bookModel)
+        public IActionResult UpdateBook([FromBody] BookModel bookModel)
         {
             try
             {
                 bookModel.ResolveDependency(_scope);
                 bookModel.UpdateBook();
-                return Ok(bookModel);
+                return Ok("Book Updated Successfully");
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -73,7 +73,7 @@ namespace Library.API.Controllers
             {
                 BookModel model = _scope.Resolve<BookModel>();
                 model.DeleteBook(id);
-                return Ok(model);
+                return Ok($"Book With Id: {id} deleted Successfully");
             }catch (Exception ex){
                 return BadRequest(ex.Message);
             }

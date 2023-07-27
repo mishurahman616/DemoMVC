@@ -46,7 +46,7 @@ namespace Library.API.Models
         {
             var book = new Book();
             _mapper.Map(this, book);
-            var x = book;
+
             _bookService.CreateBook(book);
         }
 
@@ -54,8 +54,7 @@ namespace Library.API.Models
         {
             var book = new Book();
             _mapper.Map(this, book);
-            _bookService.UpdateBook(book, book.Id);
-
+            _bookService.UpdateBook(book, book.Id);          
         }
         internal void DeleteBook(Guid id)
         {
