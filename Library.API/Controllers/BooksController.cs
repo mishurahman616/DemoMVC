@@ -9,13 +9,13 @@ using System.Linq;
 namespace Library.API.Controllers
 {
     [ApiController]
-    [Route("v1/[controller]")]
-    public class BookController : Controller
+    [Route("v1/[controller]/")]
+    public class BooksController : Controller
     {
         private ILifetimeScope _scope;
-        private readonly ILogger<BookController> _logger;
+        private readonly ILogger<BooksController> _logger;
 
-        public BookController(ILifetimeScope scope, ILogger<BookController> logger)
+        public BooksController(ILifetimeScope scope, ILogger<BooksController> logger)
         {
             _scope = scope;
             _logger = logger;
@@ -66,7 +66,7 @@ namespace Library.API.Controllers
             }
 
         }
-        [HttpDelete]
+        [HttpDelete("id")]
         public IActionResult DeleteBook(Guid id)
         {
             try

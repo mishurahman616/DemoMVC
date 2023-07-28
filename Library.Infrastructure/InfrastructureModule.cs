@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Library.Application.Services;
+using Library.Infrastructure.Securities;
 using Library.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Library.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<BookService>().As<IBookService>().InstancePerLifetimeScope();
+            builder.RegisterType<TokenService>().As<ITokenService>().InstancePerLifetimeScope();
             base.Load(builder);
         }
     }
